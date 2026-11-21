@@ -145,7 +145,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string): Promise<{ error: Error | null }> => {
     try {
-      setLoading(true);
       const cleanEmail = email.trim().toLowerCase();
       const { data, error } = await supabase.auth.signInWithPassword({
         email: cleanEmail,
@@ -153,7 +152,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        setLoading(false);
         return { error };
       }
 
@@ -165,10 +163,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setProfile(profileData);
         }
       }
-      setLoading(false);
       return { error: null };
     } catch (err: any) {
-      setLoading(false);
       return { error: err };
     }
   };
